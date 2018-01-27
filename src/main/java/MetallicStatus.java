@@ -1,5 +1,5 @@
 
-public enum MetalicStatus {
+public enum MetallicStatus {
 	METAL,
 	METALLOID,
 	NONMETAL
