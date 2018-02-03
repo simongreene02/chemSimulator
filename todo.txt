@@ -1,4 +1,1 @@
--Equality test (add dependency)
--Fix compiliation errors.
--Run gradle clean build.
--Add builder pattern to Element class.
+-Implement compounds
