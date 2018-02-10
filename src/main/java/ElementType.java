@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ElementType {
+public class ElementType implements CompoundComponent{
 
 	private static List<ElementType> elementList = new ArrayList<ElementType>();
 //	private static Set<ElementType> elementSet = new HashSet<>();
@@ -27,8 +27,9 @@ public class ElementType {
 	public static List<ElementType> getElementList() {
 		return elementList;
 	}
-	
-	public String getElementName() {
+
+	@Override
+	public String getName() {
 		return elementName;
 	}
 	//public static Set<ElementType> getElementSet() {
@@ -38,16 +39,19 @@ public class ElementType {
 	public int getElementNumber() {
 		return elementNumber;
 	}
-	public String getElementSymbol() {
+	@Override
+	public String getSymbol() {
 		return elementSymbol;
 	}
-	public double getAverageWeight() {
+	@Override
+	public double getWeight() {
 		return averageWeight;
 	}
 	public boolean isHasDefaultCharge() {
 		return hasDefaultCharge;
 	}
-	public int getDefaultCharge() {
+	@Override
+	public int getCharge() {
 		return defaultCharge;
 	}
 	public MetallicStatus getMetallicStatus() {

@@ -1,5 +1,11 @@
+import com.google.common.collect.ImmutableList;
+import com.google.common.truth.Truth;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
+//import com.google.
 
 public class PolyatomicStructureTest {
     private PolyatomicStructure ammonium;
@@ -28,17 +34,21 @@ public class PolyatomicStructureTest {
                         .metallicStatus(MetallicStatus.NONMETAL)
                         .build();
         ammonium = new PolyatomicStructure.Builder()
-                .elementComposition(new ElementType[] {nitrogen, hydrogen, hydrogen, hydrogen, hydrogen})
+                .elementComposition(ImmutableList.of(nitrogen, hydrogen, hydrogen, hydrogen, hydrogen))
                 .name("Ammonium")
                 .charge(1)
                 .build();
     }
     @Test
     public void symbol_positive_scenario() {
-        assert ammonium.getSymbol().equals("NH4");
+//        assertThat
+       //assertThat ammonium.getSymbol().equals("NH4");
+        //Truth.assertThat();
+        fail();
     }
     @Test
     public void weight_positive_scenario() {
-        assert ammonium.getTotalMass() == 18.0387;
+        //assert ammonium.getWeight() == 18.0387;
+        fail();
     }
 }
