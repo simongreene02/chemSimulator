@@ -2,10 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ElementType implements CompoundComponent{
+public class ElementType implements IonicCompoundComponent {
 
-	private static List<ElementType> elementList = new ArrayList<ElementType>();
-//	private static Set<ElementType> elementSet = new HashSet<>();
 	private final String elementName;
 	private final int elementNumber;
 	private final String elementSymbol;
@@ -22,10 +20,6 @@ public class ElementType implements CompoundComponent{
 		this.hasDefaultCharge = builder.hasDefaultCharge;
 		this.defaultCharge = builder.defaultCharge;
 		this.metallicStatus = builder.metallicStatus;
-	}
-
-	public static List<ElementType> getElementList() {
-		return elementList;
 	}
 
 	@Override
@@ -47,7 +41,8 @@ public class ElementType implements CompoundComponent{
 	public double getWeight() {
 		return averageWeight;
 	}
-	public boolean isHasDefaultCharge() {
+	@Override
+	public boolean hasDefaultCharge() {
 		return hasDefaultCharge;
 	}
 	@Override
@@ -56,24 +51,6 @@ public class ElementType implements CompoundComponent{
 	}
 	public MetallicStatus getMetallicStatus() {
 		return metallicStatus;
-	}
-	@Override
-	public int hashCode() {
-
-		return Objects.hash(elementName, elementNumber, elementSymbol, averageWeight, hasDefaultCharge, defaultCharge, metallicStatus);
-	}
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		ElementType that = (ElementType) o;
-		return elementNumber == that.elementNumber &&
-				Double.compare(that.averageWeight, averageWeight) == 0 &&
-				hasDefaultCharge == that.hasDefaultCharge &&
-				defaultCharge == that.defaultCharge &&
-				Objects.equals(elementName, that.elementName) &&
-				Objects.equals(elementSymbol, that.elementSymbol) &&
-				metallicStatus == that.metallicStatus;
 	}
 
 	public static Builder builder() {

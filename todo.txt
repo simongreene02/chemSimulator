@@ -1,3 +1,2 @@
--Change elementType in MolecularCompound to ImmutableList.
--Fix Test using Google Truth.
--Implement compounds
+-Implement compounds.
+-Re-evaluate isA relationship.
