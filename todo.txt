@@ -1,2 +1,1 @@
--Implement compounds.
--Re-evaluate isA relationship.
+-Ionic compound test.
