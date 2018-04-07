@@ -1,8 +1,13 @@
+import com.google.common.annotations.VisibleForTesting;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * TODO: Implement getName, getSymbol.
+ * TODO: Implement getName.
  */
 
 public class IonicCompound implements Compound {
+    private static final Logger log = LoggerFactory.getLogger(IonicCompound.class);
     /**
      * Cation charge >= 1
      * Cation charge <= {@link Integer#MAX_VALUE}
@@ -25,6 +30,9 @@ public class IonicCompound implements Compound {
     private final int anionCount;
 
     public IonicCompound(IonicCompoundComponent cation, IonicCompoundComponent anion) {
+        if (!isMetal(cation) && !isMetal(anion)) {
+            throw new IllegalArgumentException("Either the cation or the anion must be a metal, metalloid, or a polyatomic structure.");
+        }
         if (cation.hasDefaultCharge() && cation.getCharge() < 1) {
             throw new IllegalArgumentException("Cations must have either a positive charge or no default charge.");
         }
@@ -35,20 +43,28 @@ public class IonicCompound implements Compound {
         this.anion = anion;
         if (cation.hasDefaultCharge() && anion.hasDefaultCharge()) {
             int lcd = LeastCommonDenominatorFinder.leastCommonDenominator(cation.getCharge(), anion.getCharge());
-            cationCount = lcd / Math.abs(anion.getCharge());
-            anionCount = lcd / cation.getCharge();
+            log.info("lcd: {}", lcd);
+            cationCount = lcd / cation.getCharge();
+            anionCount = lcd / Math.abs(anion.getCharge());
         } else if (!cation.hasDefaultCharge() && anion.hasDefaultCharge()) {
+            //Anion default charge
             cationCount = Math.abs(anion.getCharge());
             anionCount = 1;
         } else if (cation.hasDefaultCharge() && !anion.hasDefaultCharge()) {
+            //Cation default charge
             cationCount = 1;
             anionCount = cation.getCharge();
         } else {
+            //Zero default charges
             cationCount = 1;
             anionCount = 1;
         }
 
 
+    }
+
+    @VisibleForTesting static boolean isMetal(IonicCompoundComponent component) {
+        return component instanceof PolyatomicStructure || ((ElementType) component).getMetallicStatus() != MetallicStatus.NONMETAL;
     }
 
     @Override
@@ -58,7 +74,7 @@ public class IonicCompound implements Compound {
 
     @Override
     public String getSymbol() {
-        return null;
+        return cation.getSymbol()+(cationCount>1?cationCount:"")+anion.getSymbol()+(anionCount>1?anionCount:"");
     }
 
     @Override
@@ -66,5 +82,11 @@ public class IonicCompound implements Compound {
         return cation.getWeight()*cationCount+anion.getWeight()*anionCount;
     }
 
+    @VisibleForTesting int getCationCount() {
+        return cationCount;
+    }
 
+    @VisibleForTesting int getAnionCount() {
+        return anionCount;
+    }
 }
